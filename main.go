@@ -1,17 +1,25 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"net/http"
+	"tasks/db"
 	"tasks/handlers"
 )
 
+func init() {
+	db.CreateDBConnection()
+	SetupLog()
+}
+
 func main() {
-	fmt.Println("Starting server")
 	mux := http.NewServeMux()
+	Log("Starting server")
+
+	mux.HandleFunc("/task", handlers.TasksHandler)
 	mux.HandleFunc("/user", handlers.UserHandler)
 	mux.HandleFunc("/", handlers.HelloWorld)
 	err := http.ListenAndServe(":3000", mux)
-	log.Fatal(err)
+	if err != nil {
+		LogError("Server Failure", err)
+	}
 }
