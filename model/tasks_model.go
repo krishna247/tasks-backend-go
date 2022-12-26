@@ -13,8 +13,8 @@ type Task struct {
 	RepeatFreq   string    `json:"repeatFreq" validate:"alpha"`
 	Tags         []string  `json:"tags"`
 	Description  string    `json:"description"`
-	IsStarred    bool      `json:"isStarred" validate:"required,boolean"`
-	IsDone       bool      `json:"isDone" validate:"required,boolean"`
+	IsStarred    bool      `json:"isStarred" validate:"boolean"`
+	IsDone       bool      `json:"isDone" validate:"boolean"`
 	SubTasks     []SubTask `json:"subTasks"`
 }
 
