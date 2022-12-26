@@ -7,17 +7,17 @@ type SubTask struct {
 
 type Task struct {
 	Id           string    `json:"id"`
-	UserUuid     string    `json:"userUuid"`
-	DeadlineDate int64     `json:"deadlineDate"`
-	Priority     int       `json:"priority"`
-	RepeatFreq   string    `json:"repeatFreq"`
+	UserUuid     string    `json:"userUuid" validate:"required,uuid"`
+	DeadlineDate int64     `json:"deadlineDate" validate:"numeric"`
+	Priority     int       `json:"priority" validate:"numeric"`
+	RepeatFreq   string    `json:"repeatFreq" validate:"alpha"`
 	Tags         []string  `json:"tags"`
 	Description  string    `json:"description"`
-	IsStarred    bool      `json:"isStarred"`
-	IsDone       bool      `json:"isDone"`
+	IsStarred    bool      `json:"isStarred" validate:"required,boolean"`
+	IsDone       bool      `json:"isDone" validate:"required,boolean"`
 	SubTasks     []SubTask `json:"subTasks"`
 }
 
 type GetTaskInput struct {
-	UserUuid string `json:"userUuid"`
+	UserUuid string `json:"userUuid" validate:"required,uuid"`
 }
