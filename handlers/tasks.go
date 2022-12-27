@@ -8,7 +8,6 @@ import (
 	"golang.org/x/exp/slog"
 	"io"
 	"net/http"
-	"strconv"
 	global "tasks/global"
 	"tasks/model"
 )
@@ -85,7 +84,6 @@ func getTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 	tasksJson, _ := json.Marshal(tasks)
-	global.Log("Returning num tasks: " + strconv.Itoa(len(tasksJson)))
 
 	_, err = w.Write(tasksJson)
 	if err != nil {
@@ -108,7 +106,7 @@ func insertTask(task *model.Task) (string, error) {
 
 func getTasks(getTaskInput *model.GetTaskInput, w *http.ResponseWriter) []model.Task {
 	var tasks []model.Task
-	err := pgxscan.Select(context.Background(), global.DbConn, &tasks, `SELECT * from task where user_uuid = '$1'`, getTaskInput.UserUuid)
+	err := pgxscan.Select(context.Background(), global.DbConn, &tasks, `SELECT * from task where user_uuid = $1`, getTaskInput.UserUuid)
 	if err != nil {
 		slog.Error("Get task: Error in getting tasks from db", err)
 		http.Error(*w, "Get task: Error in getting tasks from db: "+err.Error(), 500)
