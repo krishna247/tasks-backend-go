@@ -16,7 +16,7 @@ type Task struct {
 	IsStarred    bool      `json:"isStarred" validate:"boolean"`
 	IsDone       bool      `json:"isDone" validate:"boolean"`
 	SubTasks     []SubTask `json:"subTasks"`
-	LastUpdateTs int       `json:"lastUpdateTs" validate:"required,numeric"`
+	LastUpdateTs int       `json:"last_update_ts" validate:"required,numeric"`
 }
 
 type GetTaskInput struct {
