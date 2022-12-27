@@ -16,8 +16,13 @@ type Task struct {
 	IsStarred    bool      `json:"isStarred" validate:"boolean"`
 	IsDone       bool      `json:"isDone" validate:"boolean"`
 	SubTasks     []SubTask `json:"subTasks"`
+	LastUpdateTs int       `json:"lastUpdateTs" validate:"required,numeric"`
 }
 
 type GetTaskInput struct {
 	UserUuid string `json:"userUuid" validate:"required,uuid"`
+}
+
+type DeleteTaskInput struct {
+	TaskUuid string `json:"taskUuid" validate:"required,uuid"`
 }
