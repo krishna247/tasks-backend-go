@@ -70,14 +70,17 @@ func createTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func getTask(w http.ResponseWriter, r *http.Request) {
-	body, err := io.ReadAll(r.Body)
-	var getTaskInput model.GetTaskInput
-	err = json.Unmarshal(body, &getTaskInput)
-	if err != nil {
-		slog.Error("Get task: Error in parsing task json", err)
-		http.Error(w, "Get task: Error in parsing task json: "+err.Error(), 400)
-		return
-	}
+	userUuid := r.URL.Query().Get("userUuid")
+	var getTaskInput = model.GetTaskInput{UserUuid: userUuid}
+
+	//body, err := io.ReadAll(r.Body)
+	//var getTaskInput model.GetTaskInput
+	//err = json.Unmarshal(body, &getTaskInput)
+	//if err != nil {
+	//	slog.Error("Get task: Error in parsing task json", err)
+	//	http.Error(w, "Get task: Error in parsing task json: "+err.Error(), 400)
+	//	return
+	//}
 	global.Log("Getting task for user: " + getTaskInput.UserUuid)
 	tasks := getTasks(&getTaskInput, &w)
 
@@ -85,7 +88,7 @@ func getTask(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
 	tasksJson, _ := json.Marshal(tasks)
 
-	_, err = w.Write(tasksJson)
+	_, err := w.Write(tasksJson)
 	if err != nil {
 		slog.Error("Get task: Error in sending response", err)
 		http.Error(w, "Get task: Error in parsing task json: "+err.Error(), 400)
