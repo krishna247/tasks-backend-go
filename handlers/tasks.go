@@ -96,11 +96,11 @@ func getTask(w http.ResponseWriter, r *http.Request) {
 }
 
 func insertTask(task *model.Task) (string, error) {
-	sqlStatement := `INSERT INTO task (user_uuid,deadline_date, priority, repeat_freq, tags, description, is_starred, is_done, sub_tasks)
-			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`
+	sqlStatement := `INSERT INTO task (user_uuid,deadline_date, priority, repeat_freq, tags, description, is_starred, is_done)
+			VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id`
 	var taskId string
 	err := global.DbConn.QueryRow(context.Background(), sqlStatement, task.UserUuid, task.DeadlineDate, task.Priority, task.RepeatFreq, task.Tags,
-		task.Description, task.IsStarred, task.IsDone, task.SubTasks).Scan(&taskId)
+		task.Description, task.IsStarred, task.IsDone).Scan(&taskId)
 	if err != nil {
 		return "", err
 	}

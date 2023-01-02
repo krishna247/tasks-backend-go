@@ -1,22 +1,22 @@
 package model
 
-type SubTask struct {
-	Text   string `json:"text"`
-	IsDone bool   `json:"isDone"`
-}
+//type SubTask struct {
+//	Text   string `json:"text"`
+//	IsDone bool   `json:"isDone"`
+//}
 
 type Task struct {
-	Id           string    `json:"id"`
-	UserUuid     string    `json:"userUuid" validate:"required,uuid"`
-	DeadlineDate int64     `json:"deadlineDate" validate:"numeric"`
-	Priority     int       `json:"priority" validate:"numeric"`
-	RepeatFreq   string    `json:"repeatFreq" validate:"alpha"`
-	Tags         []string  `json:"tags"`
-	Description  string    `json:"description"`
-	IsStarred    bool      `json:"isStarred" validate:"boolean"`
-	IsDone       bool      `json:"isDone" validate:"boolean"`
-	SubTasks     []SubTask `json:"subTasks"`
-	LastUpdateTs int       `json:"last_update_ts" validate:"required,numeric"`
+	Id           string   `json:"id"`
+	UserUuid     string   `json:"userUuid" validate:"required,uuid"`
+	DeadlineDate int64    `json:"deadlineDate" validate:"numeric"`
+	Priority     int      `json:"priority" validate:"numeric"`
+	RepeatFreq   string   `json:"repeatFreq" validate:"alpha"`
+	Tags         []string `json:"tags"`
+	Description  string   `json:"description"`
+	IsStarred    bool     `json:"isStarred" validate:"boolean"`
+	IsDone       bool     `json:"isDone" validate:"boolean"`
+	//SubTasks     []SubTask `json:"subTasks"`
+	LastUpdateTs int `json:"last_update_ts" validate:"numeric"`
 }
 
 type GetTaskInput struct {
